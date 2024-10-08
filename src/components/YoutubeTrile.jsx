@@ -5,7 +5,7 @@ const YouTubeTrailer = ({ movieTitle }) => {
 
   useEffect(() => {
     const fetchTrailer = async () => {
-      const apiKey = 'AIzaSyC2pue28k1rUg8VFxva41kwuues8IsLnh8';
+      const apiKey = 'AIzaSyC2pue28k1rUg8VFxva41kwuues8IsLn';
       const searchQuery = `${movieTitle} trailer`;
       const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchQuery)}&type=video&key=${apiKey}`;
 
