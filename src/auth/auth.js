@@ -1,4 +1,5 @@
-export const api = "http://127.0.0.1:8000/api";
+export const api = "https://tony143.pythonanywhere.com/api/";
+// export const api = process.env.REACT_APP_API
 
 const registration = async (userData) => {
   try {
@@ -106,7 +107,7 @@ async function refreshAccessToken() {
     localStorage.removeItem('refresh_token');
 
     // Redirect to login page
-    window.location.href = '/login';
+    // window.location.href = '/login';
     return null;
   }
 }
@@ -159,6 +160,7 @@ export const getWatchlistMovies = async () => {
     if (!response.ok) {
       const errorMessage = await response.json();
       console.error("Error Details", errorMessage);
+      return errorMessage
     }
     return await response.json();
   }
@@ -169,15 +171,15 @@ export const getWatchlistMovies = async () => {
 }
 export const delWatchlistMovies = async (title) => {
   try {
-    const response = await fetchWithAuth(`${api}/watchlist/`,{
+    const response = await fetchWithAuth(`${api}/watchlist/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({title: title})
+      body: JSON.stringify({ title: title })
     })
 
-    if(!response.ok){
+    if (!response.ok) {
       const errorDetails = await response.json()
       console.error("Error Details", errorDetails)
     }
@@ -191,27 +193,25 @@ export const delWatchlistMovies = async (title) => {
 
 export const getMovieDetails = async (title) => {
   try {
-      const response = await fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=dfd6c928&t=${title}`);
-      
-      if (!response.ok) {
-          const errorDetails = await response.json();
-          console.error("Error Details", errorDetails);
-          throw new Error("Failed to fetch movie details");
-      }
+    const response = await fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=dfd6c928&t=${title}`);
 
-      return await response.json();
+    if (!response.ok) {
+      const errorDetails = await response.json();
+      console.error("Error Details", errorDetails);
+      throw new Error("Failed to fetch movie details");
+    }
+
+    return await response.json();
   } catch (error) {
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-          console.log("Network error: Please check your internet connection.");
-      } else {
-          console.error("Error Details", error);
-      }
-      throw error;  // Re-throw the error so it can be handled by the caller
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      console.log("Network error: Please check your internet connection.");
+
+    } else {
+      console.error("Error Details", error);
+    }
+    throw error;  // Re-throw the error so it can be handled by the caller
   }
 };
-
-
-
 
 
 

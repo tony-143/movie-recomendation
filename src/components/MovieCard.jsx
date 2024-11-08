@@ -21,3 +21,4 @@ function MovieCard({ title, imageUrl }) {
 }
 
 export default MovieCard;
+ 

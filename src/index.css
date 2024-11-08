@@ -10,4 +10,6 @@
   .spinner {
     animation: spin 1s linear infinite;
   }
-  
+  .hover:hover {
+    color: #ff6347; /* Change to your desired color */
+}

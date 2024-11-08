@@ -33,8 +33,8 @@ const Login = () => {
             console.log(e)
         }
 
-        console.log('Username:', username);
-        console.log('Password:', password);
+        // console.log('Username:', username);
+        // console.log('Password:', password);
     };
 
     return (

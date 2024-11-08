@@ -8,6 +8,7 @@ import Loading from '../components/Loading'
 import { setMoviesData } from '../store/actions'
 import Button from "@mui/material/Button";
 import YouTubeTrailer from '../components/YoutubeTrile'
+import Footer from '../components/Footer'
 
 
 const MoviePage = () => {
@@ -39,7 +40,7 @@ const MoviePage = () => {
                 console.log(error);
                 setLoading1(false);
             }
-        };
+        }; 
 
         const fetchPredictedMovies = async () => {
             try {
@@ -100,7 +101,7 @@ const MoviePage = () => {
     const handleClick = async () => {
         setLoadingBtn(!loadingBtn)
         if (!localStorage.getItem('access_token')) {
-            alert('please login');
+            // alert('please login');
             navigate('/login')
         }
         try {
@@ -236,6 +237,7 @@ const MoviePage = () => {
                 </div>
 
             </div >
+            <Footer />
 
         </>
     )

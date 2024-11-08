@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setMoviesData } from '../store/actions';
 import { api, getMovieDetails } from '../auth/auth';
 import Loading from '../components/Loading';
+import Notification from '../components/Notfification';
+import Footer from '../components/Footer';
 
 const Home = () => {
     const [loading, setLoading] = useState(true);
@@ -17,6 +19,19 @@ const Home = () => {
     const [pageNumber, setPageNumber] = useState(1)
     const moviesData = useSelector(state => state.data)
     const dispatch = useDispatch()
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     useEffect(() => {
         fetch(`${api}/moviesdata/`)
@@ -31,14 +46,14 @@ const Home = () => {
             })
             .catch(error => {
                 console.log(error);
+                handleClick()
             });
+
     }, []);
 
-
-
     useEffect(() => {
-        setMoviesLoading(true)
         const fetchMovies = async () => {
+            setMoviesLoading(true)
             const itemsPerPage = 20;
             const startIndex = (pageNumber - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
@@ -54,6 +69,7 @@ const Home = () => {
                             moviesList.push({ name: title, poster: movie.Poster });
                         } catch (error) {
                             console.error(`Error fetching movie details for ${title}:`, error);
+                            handleClick()
                         }
                     });
 
@@ -63,17 +79,13 @@ const Home = () => {
 
             setData(moviesList);
             setLoading(false);
+            setMoviesLoading(false)
         };
 
         fetchMovies();
-        setMoviesLoading(false)
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
     }, [pageNumber, moviesData.names]);
-
-
-
-
 
 
 
@@ -113,16 +125,11 @@ const Home = () => {
     };
 
 
-
-
-
-
-
     return (
         <>
             <NavBar />
 
-            <div className="me-sm-5 me-3 ms-3 ms-sm-5 mt-5 overflow-hidden">
+            <div style={{minHeight:'69vh'}} className="me-sm-5 me-3 ms-3 ms-sm-5 mt-5 overflow-hidden">
                 <div className="d-flex pt-5 justify-items-center">
                     <div className="position-relative w-75 mx-auto">
                         <input
@@ -156,7 +163,7 @@ const Home = () => {
                     </div> : <div>
 
                         {
-                            moviesLoading || loading ? <Loading /> :
+                            moviesLoading ? <Loading /> :
                                 <div className="row">
                                     {data.map((title, i) => (
                                         <div key={i} className="col-6 col-sm-4 col-md-4 col-lg-2 mb-4" >
@@ -176,9 +183,6 @@ const Home = () => {
                                         </div>
                                     </div>
 
-
-
-
                                 </div>
                         }
 
@@ -188,6 +192,9 @@ const Home = () => {
 
                 </div>
             </div>
+
+            <Notification open={open} message="Network error: Please check your internet connection." onClose={handleClose} />
+            <Footer />
         </>
     )
 }
