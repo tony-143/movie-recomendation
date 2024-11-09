@@ -56,7 +56,7 @@ const WatchListPage = () => {
     return (
         <>
             <NavBar />
-            <div style={{minHeight:'68vh'}} className="ms-sm-5 me-3 ms-3 me-sm-5">
+            <div style={{minHeight:'71vh'}} className="ms-sm-5 me-3 ms-3 me-sm-5">
                 <div className="mt-5">
                     <h2>Your Watchlist</h2>
                     {

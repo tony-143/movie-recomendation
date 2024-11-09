@@ -43,12 +43,14 @@ const Home = () => {
             })
             .then(async data => {
                 dispatch(setMoviesData(data.data))
+                setLoading(false)
             })
             .catch(error => {
                 console.log(error);
+                setLoading(false)
                 handleClick()
             });
-
+            // setLoading(false)
     }, []);
 
     useEffect(() => {
@@ -78,7 +80,7 @@ const Home = () => {
             }
 
             setData(moviesList);
-            setLoading(false);
+            // setLoading(false);
             setMoviesLoading(false)
         };
 
@@ -129,7 +131,7 @@ const Home = () => {
         <>
             <NavBar />
 
-            <div style={{minHeight:'69vh'}} className="me-sm-5 me-3 ms-3 ms-sm-5 mt-5 overflow-hidden">
+            <div style={{ minHeight: '71vh' }} className="me-sm-5 me-3 ms-3 ms-sm-5 mt-5 overflow-hidden">
                 <div className="d-flex pt-5 justify-items-center">
                     <div className="position-relative w-75 mx-auto">
                         <input
@@ -146,26 +148,13 @@ const Home = () => {
 
                 <div className=" mt-5 d-flex justify-content-center flex-column">
                     <h4 className='text-left'>{search ? "Results" : "Movies"}</h4>
+                    {
+                        loading ? <Loading /> : <>
 
-                    {search ? <div>
+                            {search ? <div>
 
-                        <div className="row">
-                            {searchResults.map((title, i) => (
-                                <div key={i} className="col-6 col-sm-4 col-md-4 col-lg-2 mb-4" >
-                                    <MovieCard
-                                        title={title.name}
-                                        imageUrl={`${title.poster}`}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-
-                    </div> : <div>
-
-                        {
-                            moviesLoading ? <Loading /> :
                                 <div className="row">
-                                    {data.map((title, i) => (
+                                    {searchResults.map((title, i) => (
                                         <div key={i} className="col-6 col-sm-4 col-md-4 col-lg-2 mb-4" >
                                             <MovieCard
                                                 title={title.name}
@@ -173,21 +162,38 @@ const Home = () => {
                                             />
                                         </div>
                                     ))}
-
-
-                                    <div className="d-flex justify-content-end">
-                                        <div className="d-flex fs-3 mb-3 gap-2 justify-content-between">
-                                            <span style={{ cursor: 'pointer' }} onClick={() => { if (pageNumber > 1) setPageNumber(pageNumber - 1) }}>⬅️</span>
-                                            <span>{pageNumber}</span>
-                                            <span style={{ cursor: 'pointer' }} onClick={() => setPageNumber(pageNumber + 1)}>➡️</span>
-                                        </div>
-                                    </div>
-
                                 </div>
-                        }
+
+                            </div> : <div>
+
+                                {
+                                    moviesLoading ? <Loading /> :
+                                        <div className="row">
+                                            {data.map((title, i) => (
+                                                <div key={i} className="col-6 col-sm-4 col-md-4 col-lg-2 mb-4" >
+                                                    <MovieCard
+                                                        title={title.name}
+                                                        imageUrl={`${title.poster}`}
+                                                    />
+                                                </div>
+                                            ))}
 
 
-                    </div>}
+                                            <div className="d-flex justify-content-end">
+                                                <div className="d-flex fs-3 mb-3 gap-2 justify-content-between">
+                                                    <span style={{ cursor: 'pointer' }} onClick={() => { if (pageNumber > 1) setPageNumber(pageNumber - 1) }}>⬅️</span>
+                                                    <span>{pageNumber}</span>
+                                                    <span style={{ cursor: 'pointer' }} onClick={() => setPageNumber(pageNumber + 1)}>➡️</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                }
+
+
+                            </div>}
+
+                        </>}
 
 
                 </div>

@@ -27,6 +27,7 @@ const MoviePage = () => {
 
     useEffect(() => {
         const fetchMovieData = async () => {
+            setLoading1(true)
             try {
                 const response = await getAllMovies();
                 // console.log(title)
@@ -43,6 +44,7 @@ const MoviePage = () => {
         }; 
 
         const fetchPredictedMovies = async () => {
+            setLoading(true)
             try {
                 const result = await getPredictedMovies(title);
                 const moviesList = []
