@@ -130,7 +130,7 @@ const MoviePage = () => {
     if (loading || loading1) {
         return <Loading />
     }
-// console.log(loadingMovies)
+// console.log(movieData)
     return (
         <>
             <NavBar />
@@ -191,7 +191,7 @@ const MoviePage = () => {
 
                             <div className='d-flex gap-2'>
                                 <p className="fs-bold">IMBD Rating:</p>
-                                <p className="fw-lighter overflow-hidden text-ellipsis me-2"> {movieData['Ratings'][0] ? movieData['Ratings'][0].Value.split('/')[0] : ""} </p>
+                                <p className="fw-lighter overflow-hidden text-ellipsis me-2"> {movieData['Ratings'] ? movieData['Ratings'][0].Value.split('/')[0] : ""} </p>
                             </div>
 
                             <div className="d-flex align-items-center justify-content-between">

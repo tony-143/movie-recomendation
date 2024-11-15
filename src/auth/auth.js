@@ -1,5 +1,5 @@
-export const api = "https://tony143.pythonanywhere.com/api/";
-// export const api = process.env.REACT_APP_API
+// export const api = "https://tony143.pythonanywhere.com/api/";
+export const api = import.meta.env.VITE_API
 
 const registration = async (userData) => {
   try {
